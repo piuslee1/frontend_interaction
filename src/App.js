@@ -46,8 +46,6 @@ class App extends Component {
               </CardBody>
             </RoundCard>
           </Col>
-        </Row>
-        <Row className="my-4">
           <Col>
             <RoundCard>
               <RoundYoutubePlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
