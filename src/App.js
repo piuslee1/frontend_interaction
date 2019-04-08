@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { 
+  Container, 
+  Row, 
+  Col, 
+  Card, 
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  CardText
+ } from 'reactstrap';
+import TopNavbar from './TopNavbar.js';
 import Joystick from 'react-joystick';
  
 const joyOptions = {
@@ -33,11 +44,33 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
+        <Row>
+          <Col xs="0"/>
+          <Col>
+            <TopNavbar/>
+          </Col>
+          <Col xs="0"/>
+        </Row>
+        <Row>
+          <Col>
+            <Card>
+              <Joystick joyOptions={joyOptions} containerStyle={containerStyle} managerListener={this.managerListener}/>
+              <CardBody>
+                <h1>Drivetrain</h1>
+                <h4>Manual Joystick Control</h4>
+                <p>Click and drag to control the robot.</p>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
 
-        <Joystick joyOptions={joyOptions} containerStyle={containerStyle} managerListener={this.managerListener} />
         
-      </div>
+      // <div>
+      //   <TopNavbar/>
+      //   <Joystick joyOptions={joyOptions} containerStyle={containerStyle} managerListener={this.managerListener} />
+      // </div>
     );
   }
 }
