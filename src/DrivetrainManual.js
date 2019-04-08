@@ -19,13 +19,19 @@ const containerStyle = {
 }
 
 export default class DrivetrainManual extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.managerListener = this.managerListener.bind(this);
-    this.state = {angle:0, force:0, x:0,y:0,z:0,rotation:0};
+    this.state = {
+      x: 0,
+      y: 0,
+      z: 0,
+      angle: 0,
+      force: 0,
+      rotation: 0
+    };
 
     let updateInterval = 200;
-
     setInterval(this.updateStatus, updateInterval);
   }
  
@@ -34,6 +40,7 @@ export default class DrivetrainManual extends React.Component {
       this.state,
       () => {}
     );
+
     functions.update_arm_position(
       this.state,
       () => {}
@@ -46,12 +53,18 @@ export default class DrivetrainManual extends React.Component {
 
   managerListener(manager) {
     manager.on('move', (e, stick) => {
-      this.setState({angle:stick.angle.radian, force:stick.force})
+      this.setState({
+        angle: stick.angle.radian,
+        force: stick.force
+      })
     })
   }
 
   render() {
-    return <Joystick joyOptions={joyOptions} containerStyle={containerStyle} managerListener={this.managerListener}/>      
+    return <Joystick joyOptions={joyOptions}
+      containerStyle={containerStyle}
+      managerListener={this.managerListener}
+    />
   }
 
 }
