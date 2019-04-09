@@ -18,24 +18,29 @@ function RoundYoutubePlayer(props) {
   }/>;
 }
 
-const debug = {
-  backgroundColor: "#FF0000"
-}
-
 class App extends Component {
+
+  componentDidMount() {
+    document.body.style.background = "#F4F4F4";
+  }
 
   render() {
     return (
       <div>
-        <Container>
-          <Row>
-            <Col xs="0"/>
-            <Col>
-              <TopNavbar/>
-            </Col>
-            <Col xs="0"/>
-          </Row>
-        </Container>
+        <div style={{
+          color: "#FFFFFF",
+          backgroundColor: "#555555"
+        }}>
+          <Container>
+            <Row>
+              <Col xs="0"/>
+              <Col>
+                <TopNavbar/>
+              </Col>
+              <Col xs="0"/>
+            </Row>
+          </Container>
+        </div>
         <div className="px-5">
           <Row className="my-4">
             <Col>

@@ -23,7 +23,7 @@ export default class TopNavbar extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="faded" light>
+        <Navbar color="faded" dark>
           <NavbarBrand href="/" className="mr-auto">Yonder Dynamics</NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
