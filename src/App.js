@@ -58,8 +58,7 @@ class App extends Component {
                 subtitle: "Live Camera Feed",
                 text: "Something something flavor text."
               }}>
-                <RoundYoutubePlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
-                  playing controls width='100%' height='500px'/>
+                <img src={"/sensors/video/stream/video0"} alt={"video feed"}/>
               </MakeCard>
             </Col>
             <Col>
