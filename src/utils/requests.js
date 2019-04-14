@@ -40,8 +40,8 @@ const functions = {
     update_drivetrain(data, callback){
         let requestString = requestPrefix + "drive_train?";
 
-        requestString += "angle="+data["angle"];
-        requestString += "&force="+data["force"];
+        requestString += "x="+data["x"];
+        requestString += "&y="+data["y"];
         let xhttp = sendRequest("POST", requestString, callback)
         xhttp.send(JSON.stringify(data));
     },

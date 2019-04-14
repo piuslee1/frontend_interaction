@@ -28,8 +28,8 @@ class App extends Component {
     super(props);
     this.state = {
       drivetrain:{
-        angle: 0,
-        force: 0
+        x: 0,
+        y: 0
       },
       arm_position:{
         x: 0,
@@ -158,8 +158,8 @@ class App extends Component {
                 <DrivetrainManual on_move={(stick) =>{
                   this.setState({
                     drivetrain:{
-                      angle: stick.angle.radian,
-                      force: stick.force
+                      x: Math.cos(stick.angle.radian) * Math.min(1,stick.force),
+                      y: Math.sin(stick.angle.radian) * Math.min(1,stick.force),
                     }
                   },
                   // Callback:
