@@ -5,6 +5,7 @@ import TopNavbar from './TopNavbar.js';
 import YoutubePlayer from 'react-player/lib/players/YouTube';
 import DrivetrainManual from './DrivetrainManual';
 import MakeCard from './utils/Card.js'
+import JoystickFeedback from './JoystickFeedback';
 
 function RoundYoutubePlayer(props) {
   return <YoutubePlayer {...props} style={
@@ -54,19 +55,17 @@ class App extends Component {
             </Col>
             <Col>
               <MakeCard body={{
-                title: "Video Feed",
-                subtitle: "Live Camera Feed",
-                text: "Something something flavor text."
+                title: "Live Camera Feed"
               }}>
                 <img src={"/sensors/video/stream/video0"} alt={"video feed"}/>
               </MakeCard>
             </Col>
             <Col>
               <MakeCard body={{
-                title: "Stats and Stuff",
-                subtitle: "",
-                text: "We don't have any."
-              }}/>
+                title: "Robot Stats"
+              }}>
+                <JoystickFeedback/>
+              </MakeCard>
             </Col>
           </Row>
         </div>
