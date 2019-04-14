@@ -10,7 +10,7 @@ const joyOptions = {
  
 const containerStyle = {
   position: 'static',
-  height: '350px',
+  height: '200px',
   width: '100%',
   background: 'linear-gradient(to right, #E684AE, #79CBCA, #77A1D3)',
   borderTopLeftRadius: '15px',
