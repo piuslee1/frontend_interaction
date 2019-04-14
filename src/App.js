@@ -5,6 +5,7 @@ import TopNavbar from './TopNavbar.js';
 import YoutubePlayer from 'react-player/lib/players/YouTube';
 import DrivetrainManual from './DrivetrainManual';
 import MakeCard from './utils/Card.js'
+import Joystick from './Joystick'
 
 function RoundYoutubePlayer(props) {
   return <YoutubePlayer {...props} style={
@@ -67,6 +68,20 @@ class App extends Component {
                 subtitle: "",
                 text: "We don't have any."
               }}/>
+            </Col>
+          </Row>
+          <Row className="my-4">
+            <Col className="col-4">
+              <MakeCard body={{
+                title: "Joystick reader",
+                subtext: "Reads input from controller",
+                text: "Connect a joystick"
+              }}>
+              <Joystick/>
+              </MakeCard>
+
+
+
             </Col>
           </Row>
         </div>
