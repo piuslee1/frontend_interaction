@@ -4,8 +4,7 @@ import functions from './utils/requests.js';
 
 const joyOptions = {
   mode: 'static',
-  position: {top: 0, left: 0},
-  catchDistance: 150,
+  position: {top: "100px", left: "50%"},
   color: 'white'
 }
  
@@ -47,9 +46,6 @@ export default class DrivetrainManual extends React.Component {
     );
   }
 
-  handleKeyPress = (event) => {
-    console.log('enter press here! ')
-  }
 
   managerListener(manager) {
     manager.on('move', (e, stick) => {
@@ -61,7 +57,7 @@ export default class DrivetrainManual extends React.Component {
   }
 
   render() {
-    return <Joystick joyOptions={joyOptions}
+    return <Joystick options={joyOptions}
       containerStyle={containerStyle}
       managerListener={this.managerListener}
     />

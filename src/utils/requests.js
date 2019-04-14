@@ -45,7 +45,9 @@ const functions = {
         requestString += "x="+data["x"];
         requestString += "&y="+data["y"];
         requestString += "&z="+data["z"];
-        requestString += "&rotation="+data["rotation"];
+        requestString += "&x_angle="+data["x_angle"]; //side by side
+        requestString += "&y_angle="+data["y_angle"]; //up and down
+        requestString += "&rotation="+data["rotation"]; //spinning the arm (spinning)
 
         let xhttp = sendRequest("POST", requestString, callback)
         xhttp.send(JSON.stringify(data));
