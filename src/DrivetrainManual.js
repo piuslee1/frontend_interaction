@@ -4,14 +4,13 @@ import functions from './utils/requests.js';
 
 const joyOptions = {
   mode: 'static',
-  position: {top: 0, left: 0},
-  catchDistance: 150,
+  position: {top: "100px", left: "50%"},
   color: 'white'
 }
  
 const containerStyle = {
   position: 'static',
-  height: '350px',
+  height: '200px',
   width: '100%',
   background: 'linear-gradient(to right, #E684AE, #79CBCA, #77A1D3)',
   borderTopLeftRadius: '15px',
@@ -31,15 +30,12 @@ export default class DrivetrainManual extends React.Component {
       rotation: 0
     };
 
-    let updateInterval = 200;
-    setInterval(this.updateStatus, updateInterval);
+    // let updateInterval = 200;
+    // setInterval(this.updateStatus, updateInterval);
   }
  
   updateStatus = () => {
-    functions.update_drivetrain(
-      this.state,
-      () => {}
-    );
+    
 
     functions.update_arm_position(
       this.state,
@@ -47,21 +43,24 @@ export default class DrivetrainManual extends React.Component {
     );
   }
 
-  handleKeyPress = (event) => {
-    console.log('enter press here! ')
-  }
 
   managerListener(manager) {
     manager.on('move', (e, stick) => {
       this.setState({
         angle: stick.angle.radian,
         force: stick.force
+      },
+      // Callback:
+      () => {
+        functions.update_drivetrain(
+        this.state,
+        () => {})
       })
     })
   }
 
   render() {
-    return <Joystick joyOptions={joyOptions}
+    return <Joystick options={joyOptions}
       containerStyle={containerStyle}
       managerListener={this.managerListener}
     />
