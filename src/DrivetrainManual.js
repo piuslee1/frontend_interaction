@@ -1,6 +1,5 @@
 import React from 'react';
 import Joystick from 'react-joystick';
-import functions from './utils/requests.js';
 
 const joyOptions = {
   mode: 'static',
@@ -21,41 +20,15 @@ export default class DrivetrainManual extends React.Component {
   constructor(props) {
     super(props);
     this.managerListener = this.managerListener.bind(this);
-    this.state = {
-      x: 0,
-      y: 0,
-      z: 0,
-      angle: 0,
-      force: 0,
-      rotation: 0
-    };
 
     // let updateInterval = 200;
     // setInterval(this.updateStatus, updateInterval);
-  }
- 
-  updateStatus = () => {
-    
-
-    functions.update_arm_position(
-      this.state,
-      () => {}
-    );
   }
 
 
   managerListener(manager) {
     manager.on('move', (e, stick) => {
-      this.setState({
-        angle: stick.angle.radian,
-        force: stick.force
-      },
-      // Callback:
-      () => {
-        functions.update_drivetrain(
-        this.state,
-        () => {})
-      })
+      this.props.on_move(stick)
     })
   }
 
