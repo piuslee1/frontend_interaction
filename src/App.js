@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import './App.css';
 import { Container, Row, Col } from 'reactstrap';
 import TopNavbar from './TopNavbar.js';
-import YoutubePlayer from 'react-player/lib/players/YouTube';
 import DrivetrainManual from './DrivetrainManual';
 import MakeCard from './utils/Card.js'
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import functions from './utils/requests.js';
+import RobotOrientation from './RobotOrientation';
 
 
-function RoundYoutubePlayer(props) {
-  return <YoutubePlayer {...props} style={
-    {
-      borderTopLeftRadius: "15px",
-      borderTopRightRadius: "15px",
-      overflow: "hidden",
-      position: "relative",
-      zIndex: 1
-    }
-  }/>;
-}
+// function RoundYoutubePlayer(props) {
+//   return <YoutubePlayer {...props} style={
+//     {
+//       borderTopLeftRadius: "15px",
+//       borderTopRightRadius: "15px",
+//       overflow: "hidden",
+//       position: "relative",
+//       zIndex: 1
+//     }
+//   }/>;
+// }
 
 
 class App extends Component {
@@ -171,9 +171,7 @@ class App extends Component {
             </Col>
             <Col>
               <MakeCard body={{
-                title: "Video Feed",
-                subtitle: "Live Camera Feed",
-                text: "Something something flavor text."
+                title: "Live Camera Feed"
               }}>
                 <img src={"/sensors/video/stream/video0"} alt={"video feed"}/>
               </MakeCard>
@@ -185,6 +183,7 @@ class App extends Component {
                 text: "We don't have any."
               }}>
 
+                <RobotOrientation/>
 
                 <KeyboardEventHandler
                   handleKeys={['w', 'a', 's', 'd', 'shift', 'space', 'q', 'e', 'left', 'right', 'up', 'down']}
@@ -211,8 +210,6 @@ class App extends Component {
                     </ul>
                   </Col>
                 </Row>
-                
-
               </MakeCard>
             </Col>
           </Row>
