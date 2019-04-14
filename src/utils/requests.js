@@ -47,7 +47,7 @@ const functions = {
     },
 
     update_arm_position(data, callback){
-        let requestString = requestPrefix + "?";
+        let requestString = requestPrefix + "arm?";
 
         requestString += "x="+data["x"];
         requestString += "&y="+data["y"];
