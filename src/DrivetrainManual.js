@@ -30,15 +30,12 @@ export default class DrivetrainManual extends React.Component {
       rotation: 0
     };
 
-    let updateInterval = 200;
-    setInterval(this.updateStatus, updateInterval);
+    // let updateInterval = 200;
+    // setInterval(this.updateStatus, updateInterval);
   }
  
   updateStatus = () => {
-    functions.update_drivetrain(
-      this.state,
-      () => {}
-    );
+    
 
     functions.update_arm_position(
       this.state,
@@ -52,6 +49,12 @@ export default class DrivetrainManual extends React.Component {
       this.setState({
         angle: stick.angle.radian,
         force: stick.force
+      },
+      // Callback:
+      () => {
+        functions.update_drivetrain(
+        this.state,
+        () => {})
       })
     })
   }
