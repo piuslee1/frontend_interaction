@@ -32,20 +32,14 @@ export default class Joystick extends React.Component {
  
   axisChangeHandler(axisName, value, previousValue) {
     if ( axisName === 'LeftStickX' ) {
-      let leftPos = (value * 50).toString() + 'px';
+      let leftButton = Object.assign({}, this.state.leftJoystick);
+
+      leftButton.left = (value * 50).toString() + 'px';
 
       this.setState({
-        leftJoystick.left: leftPos
+        leftJoystick: leftButton,
       })
-
-      console.log("BLOB", leftPos);
-
-
-      
-      //console.log("BLOB", left);
     }
-
-    //console.log(axisName, value)
   }
  
   buttonDownHandler(buttonName) {
