@@ -7,6 +7,7 @@ import MakeCard from './utils/Card.js'
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import functions from './utils/requests.js';
 import RobotOrientation from './RobotOrientation';
+import Joystick from './Joystick';
 
 
 // function RoundYoutubePlayer(props) {
@@ -210,6 +211,17 @@ class App extends Component {
                     </ul>
                   </Col>
                 </Row>
+              </MakeCard>
+            </Col>
+          </Row>
+          <Row className="my-4">
+            <Col className="col-4">
+              <MakeCard body={{
+                title: "Joystick reader",
+                subtext: "Reads input from controller",
+                text: "Connect a joystick"
+              }}>
+              <Joystick/>
               </MakeCard>
             </Col>
           </Row>
