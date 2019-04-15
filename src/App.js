@@ -9,19 +9,11 @@ import functions from './utils/requests.js';
 import RobotOrientation from './RobotOrientation';
 import Joystick from './Joystick';
 
-
-// function RoundYoutubePlayer(props) {
-//   return <YoutubePlayer {...props} style={
-//     {
-//       borderTopLeftRadius: "15px",
-//       borderTopRightRadius: "15px",
-//       overflow: "hidden",
-//       position: "relative",
-//       zIndex: 1
-//     }
-//   }/>;
-// }
-
+const keysHandled = [
+  'w', 'a', 's', 'd',
+  'shift', 'space', 'q', 'e',
+  'left', 'right', 'up', 'down'
+];
 
 class App extends Component {
 
@@ -124,8 +116,8 @@ class App extends Component {
     let arm_values = [];
 
     for (const [key, value] of Object.entries(this.state.arm_position)) {
-      if(arm_values){
-        arm_values.push(<li>{key} : {value.toFixed(3)}</li>)
+      if (arm_values){
+        arm_values.push(<li>{key}: {value.toFixed(3)}</li>)
       }
     }  
     return arm_values
@@ -179,38 +171,9 @@ class App extends Component {
             </Col>
             <Col>
               <MakeCard body={{
-                title: "Stats and Stuff",
-                subtitle: "",
-                text: "We don't have any."
+                title: "Robot Orientation"
               }}>
-
                 <RobotOrientation/>
-
-                <KeyboardEventHandler
-                  handleKeys={['w', 'a', 's', 'd', 'shift', 'space', 'q', 'e', 'left', 'right', 'up', 'down']}
-                  handleEventType="keydown"
-                  onKeyEvent={this.armKeysDown} 
-                  handleFocusableElements={true}/>
-                <KeyboardEventHandler
-                  handleKeys={['w', 'a', 's', 'd', 'shift', 'space', 'q', 'e', 'left', 'right', 'up', 'down']}
-                  handleEventType="keyup"
-                  onKeyEvent={this.armKeysUp} 
-                  handleFocusableElements={true}/>
-                
-                <Row>
-                  <Col>
-                    <h5>Keys Depressed</h5>
-                    <ul>
-                      {this.getPressedKeys()}
-                    </ul>
-                  </Col>
-                  <Col>
-                    <h5>Current Arm Position</h5>
-                    <ul>
-                      {this.displayArmValues()}
-                    </ul>
-                  </Col>
-                </Row>
               </MakeCard>
             </Col>
           </Row>
@@ -222,6 +185,38 @@ class App extends Component {
                 text: "Connect a joystick"
               }}>
               <Joystick/>
+              </MakeCard>
+            </Col>
+            <Col>
+              <MakeCard>
+                <KeyboardEventHandler
+                  handleKeys={keysHandled}
+                  handleEventType="keydown"
+                  onKeyEvent={this.armKeysDown} 
+                  handleFocusableElements={true}
+                />
+                <KeyboardEventHandler
+                  handleKeys={keysHandled}
+                  handleEventType="keyup"
+                  onKeyEvent={this.armKeysUp} 
+                  handleFocusableElements={true}
+                />
+                <Container>
+                  <Row>
+                    <Col class="col-2">
+                      <h5 class="mt-4">Keys Depressed</h5>
+                      <ul>
+                        {this.getPressedKeys()}
+                      </ul>
+                    </Col>
+                    <Col class="col-2">
+                      <h5 class="mt-4">Current Arm Position</h5>
+                      <ul>
+                        {this.displayArmValues()}
+                      </ul>
+                    </Col>
+                  </Row>
+                </Container>
               </MakeCard>
             </Col>
           </Row>

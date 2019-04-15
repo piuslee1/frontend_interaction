@@ -14,6 +14,10 @@ function RoundCard(props) {
 }
 
 function MakeCardBody(props) {
+  if (!props.body) {
+    return <CardBody/>;
+  }
+
   return (
     <CardBody>
       {props.body.title ? <h1>{props.body.title}</h1> : null}
