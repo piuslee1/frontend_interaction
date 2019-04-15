@@ -2,6 +2,12 @@ import React from 'react';
 import Gamepad from 'react-gamepad';
 import { Container, Row, Col } from 'reactstrap';
 
+/**
+ * Useful links + examples
+ * https://html5gamepad.com/
+ * https://gamepadviewer.com/
+ */
+
 export default class Joystick extends React.Component {
   constructor() {
     super();
@@ -49,9 +55,6 @@ export default class Joystick extends React.Component {
   buttonUpHandler(buttonName) {
     console.log(buttonName, 'up')
   }
- 
-// https://html5gamepad.com/
-// https://gamepadviewer.com/
 
   render() {
     return (
