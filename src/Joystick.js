@@ -40,27 +40,9 @@ export default class Joystick extends React.Component {
 
       leftButton.left = (value * 50).toString() + 'px';
 
-<<<<<<< HEAD
       this.setState({
         leftJoystick: leftButton,
       })
-=======
-      // this.setState({
-      //   leftJoystick.left: leftPos
-      // });
-
-      this.setState((state) => {
-        var leftJoystick = state.leftJoystick;
-        leftJoystick.left = leftPos;
-        return {leftJoystick};
-      });
-
-      console.log("BLOB", leftPos);
-
-
-      
-      //console.log("BLOB", left);
->>>>>>> 5fddfb170cfbdd70fbf5ade298603580d462e089
     }
   }
  
