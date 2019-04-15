@@ -1,5 +1,5 @@
-import React from 'react'
-import * as THREE from 'three'
+import React from 'react';
+import * as THREE from 'three';
 
 export default class RobotOrientation extends React.Component {
 
