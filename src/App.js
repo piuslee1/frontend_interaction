@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Container, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 import MakeCard from './utils/Card.js'
 import functions from './utils/requests.js';
@@ -8,10 +8,15 @@ import functions from './utils/requests.js';
 import TopNavbar from './modules/TopNavbar.js';
 import DrivetrainManual from './modules/DrivetrainManual';
 import RobotOrientation from './modules/RobotOrientation';
-import Joystick from './modules/Joystick';
+import JoystickReader from './modules/JoystickReader';
 import KeyboardControl, { keysHandled } from './modules/KeyboardControl';
 
 export default class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.joystickRef = React.createRef();
+  }
   
   componentDidMount() {
     document.body.style.background = "#F4F4F4";
@@ -20,20 +25,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <div style={{
-          color: "#FFFFFF",
-          backgroundColor: "#555555"
-        }}>
-          <Container>
-            <Row>
-              <Col xs="0"/>
-              <Col>
-                <TopNavbar/>
-              </Col>
-              <Col xs="0"/>
-            </Row>
-          </Container>
-        </div>
+        <TopNavbar/>
         <div className="px-5">
           <Row className="my-4">
             <Col>
@@ -42,17 +34,10 @@ export default class App extends React.Component {
                 subtitle: "Manual Joystick Control",
                 text: "Click and drag to control the robot."
               }}>
-                <DrivetrainManual on_move={(stick) =>{
-                  this.setState({
-                    drivetrain:{
-                      x: Math.cos(stick.angle.radian) * Math.min(1, stick.force),
-                      y: Math.sin(stick.angle.radian) * Math.min(1, stick.force),
-                    }
-                  },
-                  // Callback:
-                  () => {
-                    functions.update_drivetrain(this.state.drivetrain,() => {})
-                  });
+                <DrivetrainManual onMove={(xVal, yVal) => {
+                  functions.update_drivetrain({x: xVal, y: yVal}, () => {});
+                  this.joystickRef.current.axisChangeHandler('LeftStickX', xVal, null);
+                  this.joystickRef.current.axisChangeHandler('LeftStickY', yVal, null);
                 }}/>
               </MakeCard>
             </Col>
@@ -74,11 +59,11 @@ export default class App extends React.Component {
           <Row className="my-4">
             <Col className="col-4">
               <MakeCard body={{
-                title: "Joystick reader",
+                title: "Joystick Reader",
                 subtext: "Reads input from controller",
                 text: "Connect a joystick"
               }}>
-              <Joystick/>
+                <JoystickReader ref={this.joystickRef}/>
               </MakeCard>
             </Col>
             <Col>

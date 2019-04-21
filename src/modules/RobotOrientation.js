@@ -15,9 +15,7 @@ export default class RobotOrientation extends React.Component {
     const height = this.mount.clientHeight;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      75, width / height, 0.1, 1000
-    );
+    const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     const geometry = new THREE.BoxGeometry(1, 1, 1);
     const material = new THREE.MeshNormalMaterial();
@@ -67,17 +65,15 @@ export default class RobotOrientation extends React.Component {
 
   render() {
     return (
-      <div
-        style={{
-          borderTopLeftRadius: "15px",
-          borderTopRightRadius: "15px",
-          width: '100%',
-          height: '300px',
-          overflow: 'hidden',
-          position: "relative",
-          zIndex: 1
-        }}
-        ref={(mount) => { this.mount = mount }}
+      <div style={{
+        borderTopLeftRadius: "15px",
+        borderTopRightRadius: "15px",
+        width: '100%',
+        height: '300px',
+        overflow: 'hidden',
+        position: "relative",
+        zIndex: 1
+      }} ref={(mount) => { this.mount = mount }}
       />
     );
   }

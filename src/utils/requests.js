@@ -1,10 +1,10 @@
 let local_testing = true;
 let requestPrefix;
 
-if(local_testing){
+if (local_testing) {
     requestPrefix = "http://127.0.0.1:8000/"
 }
-else{
+else {
     requestPrefix = "http://192.168.1.1:8000/"
 }
 
@@ -37,7 +37,7 @@ let sendRequest = (type, url, callback) => {
 const functions = {
 
     // All the insert functions
-    update_drivetrain(data, callback){
+    update_drivetrain(data, callback) {
         let requestString = requestPrefix + "drive_train?";
 
         requestString += "x="+data["x"];

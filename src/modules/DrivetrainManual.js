@@ -3,10 +3,13 @@ import Joystick from 'react-joystick';
 
 const joyOptions = {
   mode: 'static',
-  position: {top: "100px", left: "50%"},
-  color: 'white'
+  color: 'white',
+  position: {
+    top: '100px',
+    left: '50%'
+  }
 }
- 
+
 const containerStyle = {
   position: 'static',
   height: '200px',
@@ -17,26 +20,28 @@ const containerStyle = {
 }
 
 export default class DrivetrainManual extends React.Component {
+  
   constructor(props) {
     super(props);
     this.managerListener = this.managerListener.bind(this);
-
-    // let updateInterval = 200;
-    // setInterval(this.updateStatus, updateInterval);
   }
-
 
   managerListener(manager) {
     manager.on('move', (e, stick) => {
-      this.props.on_move(stick)
-    })
+      let xVal = Math.cos(stick.angle.radian) * Math.min(1, stick.force);
+      let yVal = Math.sin(stick.angle.radian) * Math.min(1, stick.force);
+
+      this.setState({x: xVal, y: yVal}, this.props.onMove(xVal, yVal));
+    });
   }
 
   render() {
-    return <Joystick options={joyOptions}
-      containerStyle={containerStyle}
-      managerListener={this.managerListener}
-    />
+    return (
+      <Joystick options={joyOptions}
+        containerStyle={containerStyle}
+        managerListener={this.managerListener}
+      />
+    );
   }
 
 }
