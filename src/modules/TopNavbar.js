@@ -9,6 +9,9 @@ const headerStyle = {
   backgroundColor: "#555555"
 }
 
+const website = "https://www.yonderdynamics.org"
+const gitlab = "https://gitlab.com/Yonder-Dynamics/UI/frontend_interaction"
+
 export default class TopNavbar extends React.Component {
 
   constructor(props) {
@@ -34,15 +37,21 @@ export default class TopNavbar extends React.Component {
             <Col xs="0"/>
             <Col>
               <Navbar color="faded" dark>
-                <NavbarBrand href="/" className="mr-auto">Yonder Dynamics</NavbarBrand>
-                <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+                <NavbarBrand href="/" className="mr-auto">
+                  Yonder Dynamics
+                </NavbarBrand>
+                <NavbarToggler onClick={this.toggleNavbar} className="mr-2"/>
                 <Collapse isOpen={!this.state.collapsed} navbar>
                   <Nav navbar>
                     <NavItem>
-                      <NavLink href="https://www.yonderdynamics.org">Website</NavLink>
+                      <NavLink href={website}>
+                        Website
+                      </NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink href="https://gitlab.com/Yonder-Dynamics/UI/frontend_interaction">GitLab</NavLink>
+                      <NavLink href={gitlab}>
+                        GitLab
+                      </NavLink>
                     </NavItem>
                   </Nav>
                 </Collapse>
