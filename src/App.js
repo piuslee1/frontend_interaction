@@ -16,6 +16,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.joystickRef = React.createRef();
+    this.robotOrientationRef = React.createRef();
   }
   
   componentDidMount() {
@@ -38,6 +39,14 @@ export default class App extends React.Component {
                   functions.update_drivetrain({x: xVal, y: yVal}, () => {});
                   this.joystickRef.current.axisChangeHandler('LeftStickX', xVal, null);
                   this.joystickRef.current.axisChangeHandler('LeftStickY', yVal, null);
+                  this.robotOrientationRef.current.setState((state) => {
+                    return {
+                      newPos: Math.atan2(xVal, yVal),
+                      oldPos: state.currentPos,
+                      completionTime: new Date(new Date().getTime() + 1000),
+                      startTime: new Date()
+                    }
+                  })
                 }}/>
               </MakeCard>
             </Col>
@@ -52,7 +61,7 @@ export default class App extends React.Component {
               <MakeCard body={{
                 title: "Robot Orientation"
               }}>
-                <RobotOrientation/>
+                <RobotOrientation ref={this.robotOrientationRef}/>
               </MakeCard>
             </Col>
           </Row>

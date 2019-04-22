@@ -91,6 +91,7 @@ export default class JoystickReader extends React.Component {
         case 'RightStickY':
           rightJoystick.top = value;
           return {rightJoystick};
+        default:
       }
     });
   }
