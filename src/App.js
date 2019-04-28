@@ -29,7 +29,7 @@ export default class App extends React.Component {
         <TopNavbar/>
         <div className="px-5">
           <Row className="my-4">
-            <Col>
+            <Col className="col-2">
               <MakeCard body={{
                 title: "Drivetrain",
                 subtitle: "Manual Joystick Control",
@@ -42,9 +42,7 @@ export default class App extends React.Component {
                   this.robotOrientationRef.current.setState((state) => {
                     return {
                       newPos: Math.atan2(xVal, yVal),
-                      oldPos: state.currentPos,
-                      completionTime: new Date(new Date().getTime() + 1000),
-                      startTime: new Date()
+                      oldPos: state.currentPos
                     }
                   })
                 }}/>
@@ -57,7 +55,7 @@ export default class App extends React.Component {
                 <img src={"/sensors/video/stream/video0"} alt={"video feed"}/>
               </MakeCard>
             </Col>
-            <Col>
+            <Col className="col-3">
               <MakeCard body={{
                 title: "Robot Orientation"
               }}>
@@ -68,7 +66,7 @@ export default class App extends React.Component {
           <Row className="my-4">
             <Col className="col-4">
               <MakeCard body={{
-                title: "Joystick Reader",
+                title: "Joystick Feedback",
                 subtext: "Reads input from controller",
                 text: "Connect a joystick"
               }}>

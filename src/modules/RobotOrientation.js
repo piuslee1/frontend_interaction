@@ -13,10 +13,7 @@ export default class RobotOrientation extends React.Component {
 
     this.state = {
       oldPos: Math.PI,
-      newPos: Math.PI,
-      currentPos: Math.PI,
-      startTime: new Date(),
-      completionTime: new Date()
+      newPos: Math.PI
     }
   }
 
@@ -87,23 +84,11 @@ export default class RobotOrientation extends React.Component {
   }
 
   animate() {
-    let step = (
-      (
-        (
-          (
-            (this.state.newPos - this.rover.rotation.y) % 2 * Math.PI
-          ) + 3 * Math.PI
-        ) % 2 * Math.PI
-      ) - Math.PI
-    ) / (2 * Math.PI);
-
+    let step = (Math.PI - this.state.newPos - this.rover.rotation.y) / (2 * Math.PI);
     let u = Math.sign(step) * smoothstep(Math.abs(step));
-    if (-1 <= u <= 1) {
+    if (-1 <= u && u <= 1) {
       this.rover.rotation.y += u * 0.5;
     }
-
-    // console.log(this.rover.rotation.y);
-    this.setState({currentPos: this.rover.rotation.y});
 
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
@@ -119,7 +104,7 @@ export default class RobotOrientation extends React.Component {
         borderTopLeftRadius: "15px",
         borderTopRightRadius: "15px",
         width: '100%',
-        height: '300px',
+        height: '320px',
         overflow: 'hidden',
         position: "relative",
         zIndex: 1

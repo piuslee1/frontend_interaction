@@ -4,9 +4,9 @@ import { Container, Row, Col } from 'reactstrap';
 import functions from '../utils/requests.js';
 
 export const keysHandled = [
-  'w', 'a', 's', 'd',
-  'shift', 'space', 'q', 'e',
-  'left', 'right', 'up', 'down'
+  'w', 'a', 's', 'd', 'q', 'e',
+  'shift', 'space', 'left',
+  'right', 'up', 'down'
 ];
 
 export default class KeyboardControl extends React.Component {
@@ -26,25 +26,13 @@ export default class KeyboardControl extends React.Component {
         y_angle: 0,
         rotation: 0
       },
-      keys: {
-        "w":false,
-        "s":false,
-        "a":false,
-        "d":false,
-        "e":false,
-        "q":false,
-        "space":false,
-        "shift":false,
-        "left":false,
-        "right":false,
-        "up":false,
-        "down":false
-      }
+      keys: keysHandled.map((value, index, array) => {
+        return eval(`{${value}: false}`);
+      })
     }
 
     let updateInterval = 200;
     setInterval(this.update_arm_position, updateInterval);
-
   }
 
   update_arm_position = () => {
@@ -55,7 +43,9 @@ export default class KeyboardControl extends React.Component {
     if (keys.s) { arm_position.z -= .1; }
     if (keys.a) { arm_position.x -= .1; }
     if (keys.d) { arm_position.x += .1; }
-    if (keys.shift) { arm_position.y -= .1; }
+    // shift key activates automatically
+    // needs fixing
+    // if (keys.shift) { arm_position.y -= .1; }
     if (keys.space) { arm_position.y += .1; }
     if (keys.e) { arm_position.rotation += Math.PI / 10; }
     if (keys.q) { arm_position.rotation -= Math.PI / 10; }
@@ -132,7 +122,7 @@ export default class KeyboardControl extends React.Component {
         />
         <Container>
           <Row>
-            <Col className="col-2">
+            <Col>
               <h5 className="mt-4">
                 Keys Depressed
               </h5>
@@ -140,7 +130,7 @@ export default class KeyboardControl extends React.Component {
                 {this.getPressedKeys()}
               </ul>
             </Col>
-            <Col className="col-2">
+            <Col>
               <h5 className="mt-4">
                 Current Arm Position
               </h5>
