@@ -8,6 +8,7 @@ import functions from './utils/requests.js';
 import TopNavbar from './modules/TopNavbar.js';
 import DrivetrainManual from './modules/DrivetrainManual';
 import RobotOrientation from './modules/RobotOrientation';
+import PointCloud from './modules/PointCloud';
 import JoystickReader from './modules/JoystickReader';
 import KeyboardControl, { keysHandled } from './modules/KeyboardControl';
 
@@ -17,6 +18,7 @@ export default class App extends React.Component {
     super(props);
     this.joystickRef = React.createRef();
     this.robotOrientationRef = React.createRef();
+    this.pointCloudRef = React.createRef();
   }
   
   componentDidMount() {
@@ -79,6 +81,13 @@ export default class App extends React.Component {
                 text: "Valid Keys: " + keysHandled.join(', ')
               }}>
                 <KeyboardControl/>
+              </MakeCard>
+            </Col>
+            <Col className="col-3">
+              <MakeCard body={{
+                title: "Point Cloud"
+              }}>
+                <PointCloud ref={this.pointCloudRef}/>
               </MakeCard>
             </Col>
           </Row>
