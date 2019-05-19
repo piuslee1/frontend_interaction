@@ -1,15 +1,14 @@
 import React from 'react';
 import * as THREE from 'three';
 import { MTLLoader, OBJLoader } from 'three-obj-mtl-loader';
-import smoothstep from '../utils/math';
+import { PCDLoader } from '../lib/PCDLoader';
 
 export default class RobotOrientation extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      oldPos: Math.PI,
-      newPos: Math.PI
+      rotation: Math.PI/2
     };
   }
 
@@ -53,6 +52,17 @@ export default class RobotOrientation extends React.Component {
       }
     );
 
+    var pcdLoader = new PCDLoader();
+    pcdLoader.load('bunny.pcd', (mesh) => {
+      let meshTransform = new THREE.Matrix4()
+        .makeTranslation(0, -2, 1)
+        .scale(new THREE.Vector3(10, 10, 10));
+      mesh.applyMatrix(meshTransform);
+
+      this.scene.add(mesh);
+      this.pointCloud = mesh;
+    });
+
     this.camera.position.y = 3;
     this.camera.position.z = 3;
     this.camera.lookAt(this.scene.position);
@@ -80,27 +90,30 @@ export default class RobotOrientation extends React.Component {
   }
 
   animate = () => {
-    let step = (Math.PI - this.state.newPos - this.rover.rotation.y) / (2 * Math.PI);
-    let u = Math.sign(step) * smoothstep(Math.abs(step));
-    if (-1 <= u && u <= 1) {
-      this.rover.rotation.y += u * 0.5;
-    }
+    this.scene.rotation.y = this.state.rotation - Math.PI/2;
 
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
   }
 
   renderScene() {
+    let width = this.mount.clientWidth;
+    let height = this.mount.clientHeight;
+
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+
+    this.renderer.setSize(width, height);
     this.renderer.render(this.scene, this.camera);
   }
 
   render() {
     return (
       <div style={{
-        borderTopLeftRadius: "15px",
-        borderTopRightRadius: "15px",
         width: '100%',
         height: '320px',
+        borderTopLeftRadius: '10px',
+        borderTopRightRadius: '10px',
         overflow: 'hidden',
         position: "relative",
         zIndex: 1

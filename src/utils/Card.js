@@ -1,21 +1,11 @@
 import React from 'react';
-import { Card, CardBody } from 'reactstrap';
-// import YoutubePlayer from 'react-player/lib/players/YouTube';
-
-function RoundCard(props) {
-  return (
-    <Card {...props} style={{
-      borderRadius: "15px",
-      boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)"
-    }}>
-      {props.children}
-    </Card>
-  );
-}
+import posed from 'react-pose';
+import { CardBody } from 'reactstrap';
+import RoundCard from './RoundCard';
 
 function MakeCardBody(props) {
-  if (!props.body) {
-    return <CardBody/>;
+  if (props.body === undefined || props.body === null) {
+    return null;
   }
 
   return (
@@ -29,23 +19,11 @@ function MakeCardBody(props) {
 
 function MakeCard(props) {
   return (
-    <RoundCard>
+    <RoundCard state={props.state}>
       {props.children}
       <MakeCardBody body={props.body}/>
     </RoundCard>
   );
 }
-
-// function RoundYoutubePlayer(props) {
-//   return <YoutubePlayer {...props} style={
-//     {
-//       borderTopLeftRadius: "15px",
-//       borderTopRightRadius: "15px",
-//       overflow: "hidden",
-//       position: "relative",
-//       zIndex: 1
-//     }
-//   }/>;
-// }
 
 export default MakeCard;

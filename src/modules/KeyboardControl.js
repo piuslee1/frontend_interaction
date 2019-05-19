@@ -3,11 +3,16 @@ import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { Container, Row, Col } from 'reactstrap';
 import functions from '../utils/requests.js';
 
-export const keysHandled = [
+let _keysHandled = [
   'w', 'a', 's', 'd', 'q', 'e',
+  // 'W', 'A', 'S', 'D', 'Q', 'E',
   'shift', 'space', 'left',
-  'right', 'up', 'down'
+  // 'SHIFT', 'SPACE', 'LEFT',
+  'right', 'up', 'down',
+  // 'RIGHT', 'UP', 'DOWN'
 ];
+
+export const keysHandled = _keysHandled;
 
 export default class KeyboardControl extends React.Component {
 
@@ -27,9 +32,9 @@ export default class KeyboardControl extends React.Component {
         rotation: 0
       },
       keys: keysHandled.map((value, index, array) => {
-        return eval(`{${value}: false}`);
+        return eval(`{_${value}: false}`);
       })
-    }
+    };
 
     let updateInterval = 200;
     setInterval(this.update_arm_position, updateInterval);
@@ -37,28 +42,24 @@ export default class KeyboardControl extends React.Component {
 
   update_arm_position = () => {
     let keys = this.state.keys;
-    let arm_position = {...this.state.arm_position};
- 
-    if (keys.w) { arm_position.z += .1; }
-    if (keys.s) { arm_position.z -= .1; }
-    if (keys.a) { arm_position.x -= .1; }
-    if (keys.d) { arm_position.x += .1; }
-    // shift key activates automatically
-    // needs fixing
-    // if (keys.shift) { arm_position.y -= .1; }
-    if (keys.space) { arm_position.y += .1; }
-    if (keys.e) { arm_position.rotation += Math.PI / 10; }
-    if (keys.q) { arm_position.rotation -= Math.PI / 10; }
-    if (keys.left) { arm_position.x_angle -= Math.PI / 10; }
-    if (keys.right) { arm_position.x_angle += Math.PI / 10; }
-    if (keys.down) { arm_position.y_angle -= Math.PI / 10; }
-    if (keys.up) { arm_position.y_angle += Math.PI / 10; }
+    let arm_position = this.state.arm_position;
+    if (keys._w)     { arm_position.z += .1; }
+    if (keys._s)     { arm_position.z -= .1; }
+    if (keys._a)     { arm_position.x -= .1; }
+    if (keys._d)     { arm_position.x += .1; }
+    if (keys._shift) { arm_position.y -= .1; }
+    if (keys._space) { arm_position.y += .1; }
+    if (keys._e)     { arm_position.rotation += Math.PI / 10; }
+    if (keys._q)     { arm_position.rotation -= Math.PI / 10; }
+    if (keys._left)  { arm_position.x_angle -= Math.PI / 10; }
+    if (keys._right) { arm_position.x_angle += Math.PI / 10; }
+    if (keys._down)  { arm_position.y_angle -= Math.PI / 10; }
+    if (keys._up)    { arm_position.y_angle += Math.PI / 10; }
+
     if (arm_position !== this.state.arm_position) {
       let changed = false;
       Object.values(keys).forEach((value) => {
-        if (value) {
-          changed = true;
-        }
+        changed = value ? true : changed;
       });
       if (changed) {
         functions.update_arm_position(this.state.arm_position, () => {});
@@ -69,14 +70,14 @@ export default class KeyboardControl extends React.Component {
   }
 
   armKeysDown = (key) => {
-    let keys = {...this.state.keys};
+    let keys = this.state.keys;
     keys[key] = true;
 
     this.setState({keys});
   }
 
   armKeysUp = (key) => {
-    let keys = {...this.state.keys};
+    let keys = this.state.keys;
     keys[key] = false;
     this.setState({keys});
   }
