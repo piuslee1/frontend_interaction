@@ -1,7 +1,7 @@
-import React from 'react';
-import posed from 'react-pose';
-import { CardBody } from 'reactstrap';
-import RoundCard from './RoundCard';
+import React from "react";
+import posed from "react-pose";
+import { CardBody } from "reactstrap";
+import RoundCard from "./RoundCard";
 
 function MakeCardBody(props) {
   if (props.body === undefined || props.body === null) {
@@ -21,7 +21,7 @@ function MakeCard(props) {
   return (
     <RoundCard state={props.state}>
       {props.children}
-      <MakeCardBody body={props.body}/>
+      <MakeCardBody body={props.body} />
     </RoundCard>
   );
 }

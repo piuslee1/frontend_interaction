@@ -1,16 +1,12 @@
-import React from 'react';
-import * as THREE from 'three';
-import { MTLLoader, OBJLoader } from 'three-obj-mtl-loader';
-import { PCDLoader } from '../lib/PCDLoader';
+import React from "react";
+import * as THREE from "three";
+import { MTLLoader, OBJLoader } from "three-obj-mtl-loader";
+import { PCDLoader } from "../lib/PCDLoader";
 
 export default class RobotOrientation extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      rotation: Math.PI/2
-    };
-  }
+  state = {
+    rotation: Math.PI / 2
+  };
 
   componentDidMount() {
     let width = this.mount.clientWidth;
@@ -19,7 +15,7 @@ export default class RobotOrientation extends React.Component {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    
+
     let geometry = new THREE.BoxGeometry(1, 1, 1);
     let material = new THREE.MeshNormalMaterial();
     this.rover = new THREE.Mesh(geometry, material);
@@ -33,27 +29,23 @@ export default class RobotOrientation extends React.Component {
     this.scene.add(ambientLight);
 
     var mtlLoader = new MTLLoader();
-    mtlLoader.setTexturePath('models/curiosity/texture');
-    mtlLoader.load('models/curiosity/curiosity.mtl',
-      (materials) => {
-        materials.preload();
+    mtlLoader.setTexturePath("models/curiosity/texture");
+    mtlLoader.load("models/curiosity/curiosity.mtl", materials => {
+      materials.preload();
 
-        var objLoader = new OBJLoader();
-        // this doesn't work :\
-        // objLoader.setMaterials(materials);
-        objLoader.load('models/curiosity/curiosity.obj',
-          (object) => {
-            this.scene.remove(this.rover);
-            this.rover = object;
-            this.rover.rotation.y = Math.PI;
-            this.scene.add(object);
-          }
-        );
-      }
-    );
+      var objLoader = new OBJLoader();
+      // this doesn't work :\
+      // objLoader.setMaterials(materials);
+      objLoader.load("models/curiosity/curiosity.obj", object => {
+        this.scene.remove(this.rover);
+        this.rover = object;
+        this.rover.rotation.y = Math.PI;
+        this.scene.add(object);
+      });
+    });
 
     var pcdLoader = new PCDLoader();
-    pcdLoader.load('bunny.pcd', (mesh) => {
+    pcdLoader.load("bunny.pcd", mesh => {
       let meshTransform = new THREE.Matrix4()
         .makeTranslation(0, -2, 1)
         .scale(new THREE.Vector3(10, 10, 10));
@@ -67,7 +59,7 @@ export default class RobotOrientation extends React.Component {
     this.camera.position.z = 3;
     this.camera.lookAt(this.scene.position);
 
-    this.renderer.setClearColor('#000000');
+    this.renderer.setClearColor("#000000");
     this.renderer.setSize(width, height);
 
     this.mount.appendChild(this.renderer.domElement);
@@ -83,18 +75,18 @@ export default class RobotOrientation extends React.Component {
     if (!this.frameId) {
       this.frameId = requestAnimationFrame(this.animate);
     }
-  }
+  };
 
   stop = () => {
     cancelAnimationFrame(this.frameId);
-  }
+  };
 
   animate = () => {
-    this.scene.rotation.y = this.state.rotation - Math.PI/2;
+    this.scene.rotation.y = this.state.rotation - Math.PI / 2;
 
     this.renderScene();
     this.frameId = window.requestAnimationFrame(this.animate);
-  }
+  };
 
   renderScene() {
     let width = this.mount.clientWidth;
@@ -109,17 +101,20 @@ export default class RobotOrientation extends React.Component {
 
   render() {
     return (
-      <div style={{
-        width: '100%',
-        height: '320px',
-        borderTopLeftRadius: '10px',
-        borderTopRightRadius: '10px',
-        overflow: 'hidden',
-        position: "relative",
-        zIndex: 1
-      }} ref={(mount) => { this.mount = mount }}
+      <div
+        style={{
+          width: "100%",
+          height: "320px",
+          borderTopLeftRadius: "10px",
+          borderTopRightRadius: "10px",
+          overflow: "hidden",
+          position: "relative",
+          zIndex: 1
+        }}
+        ref={mount => {
+          this.mount = mount;
+        }}
       />
     );
   }
-
 }
