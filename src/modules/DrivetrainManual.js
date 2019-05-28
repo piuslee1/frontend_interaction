@@ -26,36 +26,17 @@ export default class DrivetrainManual extends React.Component {
     let angle = stick.angle.radian;
     let x = Math.cos(stick.angle.radian) * Math.min(1, stick.force);
     let y = Math.sin(stick.angle.radian) * Math.min(1, stick.force);
-
-    this.setState({ x, y, angle }, this.props.onMove(x, y, angle));
+    let isActive = true;
+    this.setState({ x, y, angle, isActive }, this.props.onMove(x, y, angle));
   };
 
   managerListener = manager => {
-    manager.on("move", (e, stick) => {
-      let angle = stick.angle.radian;
-      let x = Math.cos(stick.angle.radian) * Math.min(1, stick.force);
-      let y = Math.sin(stick.angle.radian) * Math.min(1, stick.force);
-
-      this.setState(
-        {
-          x: x,
-          y: y,
-          angle: angle
-        },
-        this.props.onMove(x, y, angle)
-      );
-    });
-    manager.on("end", (e, stick) => {
+    manager.on("move", (_, stick) => this.update(stick));
+    manager.on("end", () => {
       let x = 0;
       let y = 0;
-
-      this.setState(
-        {
-          x: x,
-          y: y
-        },
-        this.props.onMove(x, y, null)
-      );
+      let isActive = false;
+      this.setState({ x, y, isActive }, this.props.onMove(x, y, null));
     });
   };
 

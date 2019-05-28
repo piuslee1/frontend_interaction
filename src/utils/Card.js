@@ -19,7 +19,7 @@ function MakeCardBody(props) {
 
 function MakeCard(props) {
   return (
-    <RoundCard state={props.state}>
+    <RoundCard isMobile={props.isMobile} state={props.state}>
       {props.children}
       <MakeCardBody body={props.body} />
     </RoundCard>

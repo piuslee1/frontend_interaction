@@ -4,7 +4,7 @@ import { Card } from "reactstrap";
 
 const Hover = posed.div({
   enter: { boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2)" },
-  exit: { boxShadow: "0 0px 0px 0 rgba(0, 0, 0, 0.0)" }
+  exit: { boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.05)" }
 });
 
 const Fade = posed.li({
@@ -12,14 +12,24 @@ const Fade = posed.li({
   hidden: { opacity: 0 }
 });
 
+const Glow = posed.div(() => {
+  let seed = Math.random();
+  return {
+    glow: { boxShadow: `0 4px 8px 5px ${randomHSL(seed, 0.5)}` },
+    normal: { boxShadow: `0 4px 8px 5px ${randomHSL(seed, 0)}` }
+  };
+});
+
+function randomHSL(seed, alpha) {
+  return `hsla(${~~(256 * seed)}, 70%, 80%, ${alpha})`;
+}
+
 export default class RoundCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isVisible: false,
-      hover: false
-    };
-  }
+  state = {
+    isVisible: false,
+    hover: false,
+    glow: false
+  };
 
   componentDidMount() {
     this.setState({ isVisible: true });
@@ -33,10 +43,22 @@ export default class RoundCard extends React.Component {
     this.setState({ hover: false });
   };
 
+  onMouseDown = () => {
+    this.setState({ glow: true });
+  };
+
+  onMouseUp = () => {
+    this.setState({ glow: false });
+  };
+
   render() {
     return (
       <Fade
-        style={{ borderRadius: "10px" }}
+        style={{
+          margin: this.props.isMobile ? 20 : 0,
+          marginLeft: 0,
+          borderRadius: "10px"
+        }}
         className="fade"
         pose={this.state.isVisible ? "visible" : "hidden"}
       >
@@ -45,16 +67,29 @@ export default class RoundCard extends React.Component {
           className="hover"
           onMouseEnter={this.onMouseEnter}
           onMouseLeave={this.onMouseLeave}
-          pose={this.state.hover ? "enter" : "exit"}
+          pose={this.state.hover && !this.state.glow ? "enter" : "exit"}
         >
-          <Card
-            {...this.props}
-            style={{
-              borderRadius: "10px"
-            }}
+          <Glow
+            style={{ borderRadius: "10px" }}
+            className="glow"
+            onMouseLeave={this.onMouseUp}
+            onMouseDown={this.onMouseDown}
+            onMouseUp={this.onMouseUp}
+            onMouseLeaveCapture={this.onMouseUp}
+            onMouseDownCapture={this.onMouseDown}
+            onMouseUpCapture={this.onMouseUp}
+            pose={this.state.glow ? "glow" : "normal"}
           >
-            {this.props.children}
-          </Card>
+            <Card
+              {...this.props}
+              style={{
+                borderWidth: 0,
+                borderRadius: "10px"
+              }}
+            >
+              {this.props.children}
+            </Card>
+          </Glow>
         </Hover>
       </Fade>
     );
