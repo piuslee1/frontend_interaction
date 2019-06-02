@@ -2,13 +2,9 @@ import React from "react";
 import "./App.css";
 import { Row, Col } from "reactstrap";
 import posed from "react-pose";
+import cardData from "./CardData";
 import MakeCard from "./utils/Card.js";
-import functions from "./utils/requests.js";
 import TopNavbar from "./modules/TopNavbar.js";
-import DrivetrainManual from "./modules/DrivetrainManual";
-import RobotOrientation from "./modules/RobotOrientation";
-import JoystickReader from "./modules/JoystickReader";
-import KeyboardControl, { keysHandled } from "./modules/KeyboardControl";
 
 const Stagger = posed.ul({
   visible: {
@@ -60,67 +56,11 @@ export default class App extends React.Component {
             className="stagger"
             pose={this.state.isVisible ? "visible" : "hidden"}
           >
-            <MakeCard
-              isMobile={isMobile}
-              body={{
-                title: "Manual",
-                text: "Click and drag to control the robot."
-              }}
-            >
-              <DrivetrainManual
-                onMove={(x, y, rotation) => {
-                  functions.update_drivetrain({ x, y }, () => {});
-                  this.Joystick.current.axisChangeHandler(
-                    "LeftStickX",
-                    x,
-                    null
-                  );
-                  this.Joystick.current.axisChangeHandler(
-                    "LeftStickY",
-                    y,
-                    null
-                  );
-                  if (rotation === null) {
-                    return;
-                  }
-                  this.RobotOrientation.current.setState({ rotation });
-                }}
-              />
-            </MakeCard>
-            <MakeCard
-              isMobile={isMobile}
-              body={{
-                title: "Live Camera Feed"
-              }}
-            >
-              <img src={"/sensors/video/stream/video0"} alt={"video feed"} />
-            </MakeCard>
-            <MakeCard isMobile={isMobile} body={{ title: "Robot Orientation" }}>
-              <RobotOrientation ref={this.RobotOrientation} />
-            </MakeCard>
-            <MakeCard
-              isMobile={isMobile}
-              body={{
-                title: "Joystick Feedback",
-                subtext: "Reads input from controller",
-                text: "Connect a joystick"
-              }}
-            >
-              <JoystickReader
-                ref={o => {
-                  this.Joystick = o;
-                }}
-              />
-            </MakeCard>
-            <MakeCard
-              isMobile={isMobile}
-              body={{
-                title: "Keyboard Control",
-                text: "Valid Keys: " + keysHandled.join(", ")
-              }}
-            >
-              <KeyboardControl />
-            </MakeCard>
+            {cardData(this).rows.map(row => {
+              return row.columns.map(card => {
+                return <MakeCard body={card.body}>{card.data}</MakeCard>;
+              });
+            })}
           </Stagger>
         </div>
       );
@@ -134,83 +74,19 @@ export default class App extends React.Component {
               className="stagger"
               pose={this.state.isVisible ? "visible" : "hidden"}
             >
-              <Row className="my-4">
-                <Col className="col-2">
-                  <MakeCard
-                    isMobile={isMobile}
-                    body={{
-                      title: "Manual",
-                      text: "Click and drag to control the robot."
-                    }}
-                  >
-                    <DrivetrainManual
-                      onMove={(x, y, rotation) => {
-                        functions.update_drivetrain({ x, y }, () => {});
-                        this.Joystick.current.axisChangeHandler(
-                          "LeftStickX",
-                          x,
-                          null
-                        );
-                        this.Joystick.current.axisChangeHandler(
-                          "LeftStickY",
-                          y,
-                          null
-                        );
-                        if (rotation === null) {
-                          return;
-                        }
-                        this.RobotOrientation.current.setState({ rotation });
-                      }}
-                    />
-                  </MakeCard>
-                </Col>
-                <Col>
-                  <MakeCard
-                    isMobile={isMobile}
-                    body={{
-                      title: "Live Camera Feed"
-                    }}
-                  >
-                    <img
-                      src={"/sensors/video/stream/video0"}
-                      alt={"video feed"}
-                    />
-                  </MakeCard>
-                </Col>
-                <Col className="col-4">
-                  <MakeCard
-                    isMobile={isMobile}
-                    body={{ title: "Robot Orientation" }}
-                  >
-                    <RobotOrientation ref={this.RobotOrientation} />
-                  </MakeCard>
-                </Col>
-              </Row>
-              <Row className="my-4">
-                <Col className="col-4">
-                  <MakeCard
-                    isMobile={isMobile}
-                    body={{
-                      title: "Joystick Feedback",
-                      subtext: "Reads input from controller",
-                      text: "Connect a joystick"
-                    }}
-                  >
-                    <JoystickReader ref={this.Joystick} />
-                  </MakeCard>
-                </Col>
-                <Col>
-                  <MakeCard
-                    isMobile={isMobile}
-                    body={{
-                      title: "Keyboard Control",
-                      text: "Valid Keys: " + keysHandled.join(", ")
-                    }}
-                  >
-                    <KeyboardControl />
-                  </MakeCard>
-                </Col>
-              </Row>
+              {cardData(this).rows.map(row => {
+                return (
+                  <Row className={row.className}>
+                    {row.columns.map(card => {
+                      return (
+                        <Col className={card.className}>
+                          <MakeCard body={card.body}>{card.data}</MakeCard>
+                        </Col>
+                      );
+                    })}
+                  </Row>
+                );
+              })}
             </Stagger>
           </div>
         </div>
