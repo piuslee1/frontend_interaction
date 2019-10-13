@@ -1,11 +1,11 @@
-let local_testing = true;
+let local_testing = false;
 let requestPrefix;
 
 if (local_testing) {
     requestPrefix = "http://127.0.0.1:8000/"
 }
 else {
-    requestPrefix = "http://192.168.1.1:8000/"
+    requestPrefix = "http://192.168.0.10:8000/"
 }
 
 // Does the acutal request to the server
