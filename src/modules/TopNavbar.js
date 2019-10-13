@@ -1,19 +1,26 @@
-import React from 'react';
+import React from "react";
 import {
-  Container, Row, Col,
-  Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink
-} from 'reactstrap';
+  Container,
+  Row,
+  Col,
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink
+} from "reactstrap";
 
 const headerStyle = {
   color: "#FFFFFF",
   backgroundColor: "#555555"
-}
+};
 
-const website = "https://www.yonderdynamics.org"
-const gitlab = "https://gitlab.com/Yonder-Dynamics/UI/frontend_interaction"
+const website = "https://www.yonderdynamics.org";
+const gitlab = "https://gitlab.com/Yonder-Dynamics/UI/frontend_interaction";
 
 export default class TopNavbar extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -34,35 +41,29 @@ export default class TopNavbar extends React.Component {
       <div style={headerStyle}>
         <Container>
           <Row>
-            <Col xs="0"/>
+            <Col xs="0" />
             <Col>
               <Navbar color="faded" dark>
                 <NavbarBrand href="/" className="mr-auto">
                   Yonder Dynamics
                 </NavbarBrand>
-                <NavbarToggler onClick={this.toggleNavbar} className="mr-2"/>
+                <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
                 <Collapse isOpen={!this.state.collapsed} navbar>
                   <Nav navbar>
                     <NavItem>
-                      <NavLink href={website}>
-                        Website
-                      </NavLink>
+                      <NavLink href={website}>Website</NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink href={gitlab}>
-                        GitLab
-                      </NavLink>
+                      <NavLink href={gitlab}>GitLab</NavLink>
                     </NavItem>
                   </Nav>
                 </Collapse>
               </Navbar>
             </Col>
-            <Col xs="0"/>
+            <Col xs="0" />
           </Row>
         </Container>
       </div>
     );
   }
-
 }
-

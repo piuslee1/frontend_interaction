@@ -20,3 +20,12 @@ which allows us to avoid dealing with CORS and other issues which arise when
 working with separate servers.
 
 The server backend uses __swagger__ for API specification.
+
+## To build and host on rpi
+
+0. connect to the yonder_rover wifi
+1. npm build on your local computer
+    * this will build a static /build
+2. scp the build folder to the raspberry pi (scp -r build yonder@yonder_rover.com:~)
+3. move the contents of build to /var/www/html (sudo mv build/* /var/www/html/)
+4. go to any non cached website in your browser while connected to the yonder_rover wifi and the updated page will load
